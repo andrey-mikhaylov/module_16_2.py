@@ -3,12 +3,38 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+
+# 2.Создайте маршрут к главной странице - "/".
 @app.get("/")
-async def root():
-    return "main"
+async def main_page() -> str:
+    # По нему должно выводиться сообщение "Главная страница".
+    return "Главная страница"
+
+
+# 3.Создайте маршрут к странице администратора - "/user/admin".
+@app.get("/user/admin")
+async def login_as_admin() -> str:
+    # По нему должно выводиться сообщение "Вы вошли как администратор".
+    return "Вы вошли как администратор"
+
+
+# 5.Создайте маршрут к страницам пользователей передавая данные в адресной строке - "/user".
+@app.get("/user")
+async def get_user_info(username: str, age: int=100):
+    # По нему должно выводиться сообщение "Информация о пользователе. Имя: <username>, Возраст: <age>".
+    return f"Информация о пользователе. Имя: {username}, Возраст: {age}"
+
+
+# 4.Создайте маршрут к страницам пользователей используя параметр в пути - "/user/{user_id}".
+@app.get("/user/{user_id}")
+async def login_as_user_id(user_id: int) -> str:
+    # По нему должно выводиться сообщение "Вы вошли как пользователь № <user_id>".
+    return f"Вы вошли как пользователь № {user_id}"
+
 
 if __name__ == '__main__':
-    uvicorn.run(app, reload=True)
+    uvicorn.run(app)
+
 
 """
 2024/02/16 00:00|Домашнее задание по теме "Основы Fast Api и маршрутизация"
